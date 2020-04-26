@@ -1,21 +1,33 @@
 import React from "react"
 import { Global, css } from "@emotion/core"
 import Header from "../components/header"
+import Footer from "../components/footer"
 import Helmet from "react-helmet"
+import useSeo from '../hooks/use-seo';
 
 const Layout = props => {
+const seo=useSeo();
+
+
+const {fallbackSeo:{description,title}}=seo;
+
+
   return (
     <>
       <Global
         styles={css`
           html {
             font-size: 62.5%;
-          }
+            box-sizing: border-box;
+          }    *, *:before, *:after {
+            box-sizing: inherit;
+        }
 
           body {
-            font-size: 16px;
-            font-size: 1.6rem;
+            font-size: 18px;
+            font-size: 1.8rem;
             line-height: 1.5;
+            font-family: "PT Sans", sans-serif;
           }
           h1 .h2,
           h3 {
@@ -37,7 +49,8 @@ const Layout = props => {
         `}
       />
       <Helmet>
-        <title>Gastby Hotel</title>
+        <title>{title}</title>
+        <meta name="description" content={description}/>
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
           rel="stylesheet"
@@ -49,6 +62,9 @@ const Layout = props => {
       </Helmet>
       <Header />
       {props.children}
+      <Footer 
+        titulo={title}
+      />
     </>
   )
 }
